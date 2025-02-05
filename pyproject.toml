@@ -1,0 +1,26 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "flow-modnum"
+version = "0.0.1"
+authors = [
+  { name="Matias Bravo", email="mjbravo4@uc.cl" },
+]
+description = "Python library with utilities created for Flow Hydro Consulting numerical modeling."
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+license = "MIT"
+license-files = ["LICEN[CS]E*"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/foo"]
+
+[project.urls]
+Homepage = "https://github.com/MatiasBravo1511/flow-modnum"
+Issues = "https://github.com/MatiasBravo1511/flow-modnum/issues"
