@@ -1,6 +1,6 @@
 Metadata-Version: 2.2
 Name: flow-modnum
-Version: 0.0.1
+Version: 0.0.2
 Summary: Flow Hydro Consulting's numerical modeling group Python library.
 Author-email: Matias Bravo <mjbravo4@uc.cl>
 License: Copyright (c) 2018 The Python Packaging Authority
