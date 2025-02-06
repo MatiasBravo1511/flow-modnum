@@ -6,5 +6,5 @@ src/flow_modnum.egg-info/SOURCES.txt
 src/flow_modnum.egg-info/dependency_links.txt
 src/flow_modnum.egg-info/requires.txt
 src/flow_modnum.egg-info/top_level.txt
-src/water_levels/__init__.py
-src/water_levels/plots.py
+src/flowmodnum/__init__.py
+src/flowmodnum/water_levels.py
