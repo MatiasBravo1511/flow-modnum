@@ -172,7 +172,7 @@ def get_stats(obs_dir, sim_dir_mod2obs, format_date='%d/%m/%Y', lang='EN'):
     # Observed range
     min_obs = df_fit.observed.min()
     max_obs = df_fit.observed.max()
-    range = max_obs-min_obs
+    range_obs = max_obs-min_obs
     
     # KGE is calculated
     mean_sim = df_fit.simulated.mean()
@@ -187,11 +187,11 @@ def get_stats(obs_dir, sim_dir_mod2obs, format_date='%d/%m/%Y', lang='EN'):
     # Stats are generated as csv
     if lang=='EN':
         df = pd.DataFrame({'Parameter':['Total wells', 'Total points', 'Minimum observed (msnm)', 'Maximum observed (msnm)', 'Observed range Max - Min (m)', 'MAE (m)', 'NMAE (%)', 'RMS (m)', 'NRMS (%)', 'KGE'],
-                    'Transient calibration':[len(df_ajuste.pozo.unique()),len(df_ajuste),min_obs,max_obs,rango,mae,100*mae/rango,rms,100*rms/rango, kge]})
+                    'Transient calibration':[len(df_fit.well.unique()),len(df_fit),min_obs,max_obs,range_obs,mae,100*mae/range_obs,rms,100*rms/range_obs, kge]})
         df.to_csv(os.path.join(cwd, 'stats.csv'), encoding='latin-1', index=False)
     elif lang=='SP':
         df = pd.DataFrame({'Parámetro':['Total pozos', 'Total datos', 'Mínimo Observado (msnm)', 'Máximo observado (msnm)', 'Rango de Observaciones Máx - Min (m)', 'MAE (m)', 'NMAE (%)', 'RMS (m)', 'NRMS (%)', 'KGE'],
-                    'Calibración Transiente':[len(df_ajuste.pozo.unique()),len(df_ajuste),min_obs,max_obs,rango,mae,100*mae/rango,rms,100*rms/rango, kge]})
+                    'Calibración Transiente':[len(df_fit.well.unique()),len(df_fit),min_obs,max_obs,range_obs,mae,100*mae/range_obs,rms,100*rms/range_obs, kge]})
         df.to_csv(os.path.join(cwd, 'estadisticos.csv'), encoding='latin-1', index=False)
 
 def mapped_hydrograms(obs_dir, sim_dir, EPSG, wells_dir, format_date='%d/%m/%Y', lang='EN', grid_dir=None):
@@ -222,14 +222,14 @@ def mapped_hydrograms(obs_dir, sim_dir, EPSG, wells_dir, format_date='%d/%m/%Y',
 
     # Read table with wells coordinates
     wells = pd.read_csv(wells_dir, sep='\t', header=None)
-    wells.columns = ['well_name', 'x', 'y', 'model_layer']
+    wells.columns = ['well', 'x', 'y', 'model_layer']
 
     # Convert EPSG to WGS84
     transformer = Transformer.from_crs("EPSG:{}".format(EPSG), "EPSG:4326", always_xy=True)
     def convert_psad56_to_wgs84(easting, northing):
         lon, lat = transformer.transform(easting, northing)
         return lat, lon
-    wells[['Lat', 'Lon']] = wells.apply(lambda row: convert_psad56_to_wgs84(row['X'], row['Y']), axis=1, result_type='expand')
+    wells[['Lat', 'Lon']] = wells.apply(lambda row: convert_psad56_to_wgs84(row['x'], row['y']), axis=1, result_type='expand')
 
     # Create map centered con coordinates mean values
     m = folium.Map(location=[wells['Lat'].mean(), wells['Lon'].mean()], zoom_start=12, tiles=None)
@@ -255,9 +255,9 @@ def mapped_hydrograms(obs_dir, sim_dir, EPSG, wells_dir, format_date='%d/%m/%Y',
     # Function to create hydrograms
     def hydrogram(df_sim, df_obs):
         # Scale: Default at 3. Can be modified on map
-        means = (df_obs.nivel.mean()+df_sim.nivel.mean())/2
-        maxs = max(df_obs.nivel.max(), df_sim.nivel.max())
-        mins = min(df_obs.nivel.max(), df_sim.nivel.max())
+        means = (df_obs.water_level.mean()+df_sim.water_level.mean())/2
+        maxs = max(df_obs.water_level.max(), df_sim.water_level.max())
+        mins = min(df_obs.water_level.max(), df_sim.water_level.max())
         maxs = means+(maxs-mins)
         mins = means-(maxs-mins)
         maxs = max(maxs, means+3)

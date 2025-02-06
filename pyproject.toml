@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "flow-modnum"
-version = "0.0.4"
+version = "0.0.11"
 description = "Flow Hydro Consulting's numerical modeling group Python library."
 readme = "README.md"
 authors = [{ name = "Matias Bravo", email = "mjbravo4@uc.cl" }]
