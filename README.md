@@ -6,7 +6,7 @@ Python library with utilities created for Flow Hydro Consulting numerical modeli
 Introduction
 -----------------------------------------------
 
-flow-modnum is a linrary with utilites created for Flow Hydro Consulting numerical modeling group. The utilites were built to plot results from MODFLOW models, such as water levels, concentrations, properties, among others. flow-modnum supports MODFLOW-USG.
+flow-modnum is a library with utilites created for Flow Hydro Consulting numerical modeling group. The utilites were built to plot results from MODFLOW models, such as water levels, concentrations, properties, among others. flow-modnum supports MODFLOW-USG.
 
 
 Documentation
