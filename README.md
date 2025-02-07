@@ -6,7 +6,7 @@ Python library with utilities created for Flow Hydro Consulting numerical modeli
 Introduction
 -----------------------------------------------
 
-flow-modnum is a library with utilites created for Flow Hydro Consulting numerical modeling group. The utilites were built to plot results from MODFLOW models, such as water levels, concentrations, properties, among others. flow-modnum supports MODFLOW-USG.
+flow-modnum is a library with utilites created for Flow Hydro Consulting numerical modeling group. The utilites were built to plot results from MODFLOW models, such as water levels, concentrations, properties, among others. flow-modnum supports MODFLOW-USG. Results from model's are generated using PEST's Groundwater Utilities (https://pesthomepage.org/programs)
 
 
 Documentation
@@ -48,15 +48,78 @@ from flowmodnum import water_levels
 
 # Function to plot hydrograms
 water_levels.plot_hydrograms(obs_dir, model_dir, wells_dir, scale, date_ini, format_date='%d/%m/%Y', lang='EN')
+"""
+    Function to plot water level hydrograms form MODFLOW-USG output files.
+    
+    Arguments:
+    
+    obs_dir: (str) Directory to observation data. Format as John Doherty's Groundwater Utilities.
+    model_dir: (str) Directory to model files.
+    wells_dir: (str) Directory to table containing wells. Columns must be: "Well_Name" "X_Coordinate" "Y_Coordinate" "Model_Layer"
+    scale: (float/int) Vertical scale (+- from mean values)
+    date_ini: (str) Initial date. Must be the same format as format_date.
+    format_date: (str) (Optional) Date format to build DataFrames. Default is '%d/%m/%Y'
+    lang: (str) (Optional) Language. Can choose between EN and SP. Default is EN.
+    
+    Outputs: Folder with hydrograms for each well.
+    
+"""
 
 # Function to plot fit between observed and simulated values
 water_levels.plot_fit(obs_dir, model_dir, wells_dir, date_ini, format_date='%d/%m/%Y', lang='EN')
+"""
+    Function to plot simulated fit to observed data from MODFLOW-USG output files.
+    
+    Arguments:
+    
+    obs_dir: (str) Directory to observation data. Format as John Doherty's Groundwater Utilities.
+    model_dir: (str) Directory to model files.
+    wells_dir: (str) Directory to table containing wells. Columns must be: "Well_Name" "X_Coordinate" "Y_Coordinate" "Model_Layer"
+    scale: (float/int) Vertical scale (+- from mean values)
+    date_ini: (str) Initial date. Must be the same format as format_date.
+    format_date:(str) (Optional) Date format to build DataFrames. Default is '%d/%m/%Y'
+    lang: (str) (Optional) Language. Can choose between EN and SP. Default is EN.
+    
+    Output: Fit plot image.
+"""
 
 # Function to get fit statistics between observed and simulated values
 water_levels.get_stats(obs_dir, model_dir, wells_dir, date_ini, format_date='%d/%m/%Y', lang='EN')
+"""
+    Function to generate table with fit statistics from MODFLOW-USG output files.
+    
+    Arguments:
+    
+    obs_dir: (str) Directory to observation data. Format as John Doherty's Groundwater Utilities.
+    model_dir: (str) Directory to model files.
+    wells_dir: (str) Directory to table containing wells. Columns must be: "Well_Name" "X_Coordinate" "Y_Coordinate" "Model_Layer"
+    scale: (float/int) Vertical scale (+- from mean values)
+    date_ini: (str) Initial date. Must be the same format as format_date.
+    format_date: (str) (Optional) Date format to build DataFrames. Default is '%d/%m/%Y'
+    lang: (str) (Optional) Language. Can choose between EN and SP. Default is EN.
+    
+    Output: Fit stats on .csv file.
+"""
 
 # Function to generate interactive map with hydrograms
 water_levels.mapped_hydrograms(obs_dir, model_dir, EPSG, wells_dir, date_ini, format_date='%d/%m/%Y', lang='EN', grid_dir=None)
+"""
+    Function to plot water level hydrograms on map from MODFLOW-USG output files.
+    
+    Arguments:
+    
+    obs_dir: (str) Directory to observation data. Format as John Doherty's Groundwater Utilities.
+    model_dir: (str) Directory to model files.
+    EPSG: (int) EPSG code to which all coordinated are referenced.
+    wells_dir: (str) Directory to table containing wells. Columns must be: "Well_Name" "X_Coordinate" "Y_Coordinate" "Model_Layer"
+    scale: (float) Vertical scale (+- from mean values)
+    date_ini: (str) Initial date. Must be the same format as format_date.
+    format_date: (str)(Optional) Date format to build DataFrames. Default is '%d/%m/%Y'
+    lang: (str) (Optional) Language. Can choose between EN and SP. Default is EN.
+    grid_dir: (str) (Optional) Directory to model grid to plot on map. Shapefile format. Must be referenced to EPSG.
+    
+    Outputs: .html file with interactive map with wells. Each wells shows hydrograms on click.
+"""
 
 # Function to generate contours for given layers and stress periods
 water_levels.generate_contours(model_dir, date_ini, layers, sps, EPSG, levels, dry_cells = -999.99)
