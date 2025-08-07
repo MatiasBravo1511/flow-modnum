@@ -20,6 +20,11 @@ from shapely.geometry import LineString, mapping, Polygon
 from scipy.interpolate import griddata
 from skimage import measure
 
+def get_executable_path(executable):
+    base_path = Path(__file__).parent
+    exe_path = base_path /'exe'/executable
+    return str(exe_path)
+
 def plot_hydrograms(obs_dir, model_dir, wells_dir, scale, date_ini, format_date='%d/%m/%Y', lang='EN'):
     """
     Function to plot water level hydrograms form MODFLOW-USG output files.
@@ -620,18 +625,13 @@ def mapped_hydrograms(obs_dir, model_dir, EPSG, wells_dir, date_ini, format_date
     elif lang == 'SP':
         m.save('Mapa_Hidrogramas.html')
 
-def get_executable_path(executable):
-    base_path = Path(__file__).parent
-    exe_path = base_path /'exe'/executable
-    return str(exe_path)
-
 def generate_contours(model_dir, date_ini, layers, sps, EPSG, levels, dry_cells = -999.99):
     """
     Function to generate water level contours (shapefiles) from MODFLOW-USG output file. 
     
     Arguments:
     
-    hds_dir: (str) Directory to MODFLOW-USG .hds file.
+    model_dir: (str) Directory to MODFLOW-USG model files.
     gsf_dir: (str) Directory to MODFLOW-USG .gsf file.
     date_ini: (str) Initial date of model. Format dd/mm/YYYY.
     layers: (list) Layers to extract contours of water levels.
